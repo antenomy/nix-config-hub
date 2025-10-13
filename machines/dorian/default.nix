@@ -14,6 +14,10 @@
     description = "antenomy";
     extraGroups = [ "networkmanager" "wheel" "docker"];
   };
+
+  nixpkgs.config.allowUnfree = true;
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
  
     
   # Home Manager
@@ -114,10 +118,6 @@
     LC_TELEPHONE = "sv_SE.UTF-8";
     LC_TIME = "sv_SE.UTF-8";
   };
-  
-  nixpkgs.config.allowUnfree = true;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
 
   # Desktop Environment
   services.greetd = {
@@ -199,13 +199,14 @@
     hyprcursor
     
     # Development
-    vscode
+    # vscode
     code-cursor-fhs
     cloudflared
     wget
     ollama
     rocmPackages.clr
     clinfo
+    just
 
     # Productivity
     notion-app-enhanced
