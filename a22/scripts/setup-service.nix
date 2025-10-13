@@ -45,7 +45,7 @@ pkgs.writeShellApplication {
     if pgrep -f "cloudflared tunnel" > /dev/null; then
         log "Cloudflared already running"
     else
-        nohup cloudflared tunnel run --token eyJhIjoiYTczOGQxOTU0NWVhN2NiYWIxYjY3N2IyODM3ZDViYzIiLCJ0IjoiNGY1YTg4NTYtODFlOC00YTFlLWIzZmUtYjQ5NWU2MDc1NTA5IiwicyI6Ik9HUTJOalUwTjJFdFptWXhPQzAwWlRoaExUZzBPVEV0TlRnNE1UVm1aVFEyWkRKbSJ9 > /var/log/cloudflared.log 2>&1 &
+        nohup cloudflared tunnel run --token TOKEN > /var/log/cloudflared.log 2>&1 &
         sleep 5
     fi
 
