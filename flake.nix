@@ -47,6 +47,9 @@
           switch = "just --justfile ~/git/nix-config-hub/justfile";
           python = "python3";
         };
+        sessionVariables = {
+          PATH="/Users/antenomy/Library/Python/3.9/bin:$PATH"
+        }
       };
     };
   in
