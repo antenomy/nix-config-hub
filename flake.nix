@@ -48,7 +48,7 @@
           python = "python3";
         };
         sessionVariables = {
-          PATH="/Users/antenomy/Library/Python/3.9/bin:$PATH"
+          PATH="/Users/antenomy/Library/Python/3.9/bin:$PATH";
         };
       };
     };
