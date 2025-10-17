@@ -43,7 +43,6 @@
 
       programs.zsh = {
         enable = true;
-        defaultShell = true;
         shellAliases = {
           switch = "just --justfile ~/git/nix-config-hub/justfile";
           python = "python3";
