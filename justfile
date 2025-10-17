@@ -42,3 +42,8 @@ switch:
       sudo nixos-rebuild switch --flake /etc/nixos
     fi
   fi
+
+push VAR="update":
+  git add .
+  git commit -m "{{VAR}}"
+  git push
