@@ -1,6 +1,8 @@
 { self, config, pkgs, lib, inputs, ... }: #config, pkgs, lib, 
 
 {
+  system.primaryUser = "antenomy";
+
   nixpkgs.config = {
     allowUnfree = true;
   };
@@ -9,6 +11,9 @@
     hostName = "aelin";
     computerName = "aelin";
   };
+
+  security.pam.enableSudoTouchIdAuth = true;
+
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -21,26 +26,71 @@
 
     # Privacy
     bitwarden-desktop
-    # veracrypt
 
-    # Developer
+    # Productivity
+    # notion-app-enhanced
     raycast
     chatgpt
 
+    # Developer
     vscode
     code-cursor
+    neovim
+
+    docker
+    docker-compose
     direnv
+    cloudflared
     just
     ollama
+    ffmpeg_8
+
+    python311
+    python310
 
     # Communication
-    # mattermost
     zoom-us
     whatsapp-for-mac
+    discord
 
     # Media
     spotify
+    
   ];
+
+  homebrew = {
+    enable = true;
+    # onActivation.cleanup = "uninstall";
+
+    taps = [];
+    brews = [
+      "yt-dlp"
+    ];
+    casks = [
+
+      # General
+      "dropbox"
+      "disk-inventory-x"
+
+      # Privacy
+      "veracrypt"
+
+      # Productivity
+      "figma"
+      "obsidian"
+      "notion-enhanced"
+      
+      # "notion"
+
+      # Developer
+      "cloudflare-warp"
+      "docker-desktop"
+      "macfuse"
+
+      # Communication
+      "mattermost"
+    ];
+  };
 
   
   # Necessary for using flakes on this system.

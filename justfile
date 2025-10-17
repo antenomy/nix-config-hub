@@ -17,29 +17,29 @@ switch:
   fi
 
   if [ "$recognizeHostname" = 1 ]; then
-    echo "copying to $path"
-
-    sudo cp ./flake.nix "$path"
-    sudo cp -r ./machines "$path"
-    sudo cp -r ./modules "$path"
-
     if [ "$isDarwin" = 1 ]; then
-      sudo darwin-rebuild switch
-      # Source and destination directories
-    SOURCE_DIR="/Applications/Nix Apps"
-    DEST_DIR="/Applications"
+      sudo darwin-rebuild switch --flake ./flake.nix
 
-    # Loop through each item in the source directory
-    for app in "$SOURCE_DIR"/*; do
-      if [ -d "$app" ]; then
-        programName=$(basename "$app")
-        sudo ln -s "$SOURCE_DIR/$programName" "$DEST_DIR/$programName"
-        echo "Created symlink for $programName"
+      if [ $? -eq 0 ]; then
+        echo "Switch succeeded"
+        
+        # Source and destination directories
+        SOURCE_DIR="/Applications/Nix Apps"
+        DEST_DIR="/Applications"
+
+        # Loop through each item in the source directory
+        for app in "$SOURCE_DIR"/*; do
+          if [ -d "$app" ]; then
+            programName=$(basename "$app")
+            sudo ln -s "$SOURCE_DIR/$programName" "$DEST_DIR/$programName"
+            echo "Created symlink for $programName"
+          fi
+        done
+      else
+        echo "Switch failed"
       fi
-    done
-
     else
-      sudo nixos-rebuild switch --flake /etc/nixos
+      sudo nixos-rebuild switch --flake ./flake.nix
     fi
   fi
 

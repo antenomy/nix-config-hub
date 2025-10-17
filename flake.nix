@@ -26,7 +26,33 @@
     };
   };
 
-  outputs = { self, nixpkgs, nix-darwin, ... } @ inputs: {
+  outputs = { self, nixpkgs, nix-darwin, home-manager, ... } @ inputs:
+  let
+    homeconfig = {pkgs, ...}: {
+      # this is internal compatibility configuration 
+      # for home-manager, don't change this!
+      home.stateVersion = "23.05";
+      # Let home-manager install and manage itself.
+      programs.home-manager.enable = true;
+
+      home.homeDirectory = "/home/antenomy";
+
+      home.packages = with pkgs; [];
+
+      home.sessionVariables = {
+        EDITOR = "vim";
+      };
+
+      programs.zsh = {
+        enable = true;
+        shellAliases = {
+          switch = "just --justfile ~/git/nix-config-hub/justfile";
+          python = "python3";
+        };
+      };
+    };
+  in
+  {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [
@@ -39,6 +65,12 @@
       specialArgs = { inherit self nixpkgs inputs; };
       modules = [ 
         ./machines/aelin/default.nix 
+        home-manager.darwinModules.home-manager  {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.verbose = true;
+          home-manager.users.antenomy = homeconfig;
+        }
       ];
     };
   };
