@@ -43,14 +43,18 @@
 
       programs.zsh = {
         enable = true;
+        defaultShell = true;
         shellAliases = {
           switch = "just --justfile ~/git/nix-config-hub/justfile";
           python = "python3";
         };
+        promptInit = ''
+          PROMPT='%F{green}%n@%m%f %F{blue}%~%f %# '
+        '';
         sessionVariables = {
           PATH="/Users/antenomy/Library/Python/3.9/bin:$PATH";
           # PS1="\u@\h \W \$ ";
-          PROMPT="hello";
+          # PROMPT="hello";
         };
       };
     };
