@@ -49,7 +49,7 @@
         };
         sessionVariables = {
           PATH="/Users/antenomy/Library/Python/3.9/bin:$PATH"
-        }
+        };
       };
     };
   in
