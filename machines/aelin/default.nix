@@ -12,6 +12,15 @@
     computerName = "aelin";
   };
 
+  users.users = {
+    antenomy = {
+      isNormalUser = true;
+      home = "/Users/antenomy";  # <— explicitly set the home directory
+      shell = pkgs.zsh;
+    };
+  };
+
+
   security.pam.enableSudoTouchIdAuth = true;
 
 
