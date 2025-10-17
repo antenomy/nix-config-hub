@@ -35,7 +35,7 @@
       # Let home-manager install and manage itself.
       programs.home-manager.enable = true;
 
-      home.homeDirectory = "/home/antenomy";
+      home.homeDirectory = /home/antenomy;
 
       home.packages = with pkgs; [];
 
