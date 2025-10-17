@@ -64,7 +64,7 @@
       modules = [ 
         ./machines/aelin/default.nix 
         home-manager.darwinModules.home-manager  {
-          home-manager.homeDirectory = "/Users/antenomy";
+          # home-manager.homeDirectory = "/Users/antenomy";
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.verbose = true;
