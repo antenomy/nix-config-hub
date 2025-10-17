@@ -79,7 +79,11 @@
 
 
   # Network
-  networking.hostName = "nixos";
+  networking = {
+    hostName = "dorian";
+    computerName = "dorian";
+  };
+  
   networking.wireless.enable = true;
   
   networking.wireless.networks = {

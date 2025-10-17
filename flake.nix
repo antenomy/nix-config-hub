@@ -4,6 +4,8 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nix-darwin.url = "github:nix-darwin/nix-darwin/master";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     # nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
     # nixpkgs-master.url = "github:nixos/nixpkgs";
 
@@ -24,12 +26,19 @@
     };
   };
 
-  outputs = { self, nixpkgs, ... } @ inputs: {
+  outputs = { self, nixpkgs, nix-darwin, ... } @ inputs: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [
         # ./modules/default.nix
         ./machines/dorian/default.nix
+      ];
+    };
+
+    darwinConfigurations.aelin = nix-darwin.lib.darwinSystem {
+      specialArgs = { inherit self nixpkgs inputs; };
+      modules = [ 
+        ./machines/aelin/default.nix 
       ];
     };
   };
