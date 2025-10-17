@@ -1,9 +1,13 @@
-switch:
+switch VAR="update":
   #!/bin/bash
 
   HOSTNAME="$(hostname)"
   recognizeHostname=0
   isDarwin=0
+
+  git add .
+  git commit -m "{{VAR}}"
+  git push
 
   if [ "$HOSTNAME" = "aelin" ]; then
     path="/etc/nix-darwin"
@@ -18,7 +22,7 @@ switch:
 
   if [ "$recognizeHostname" = 1 ]; then
     if [ "$isDarwin" = 1 ]; then
-      sudo darwin-rebuild switch --flake ./flake.nix
+      sudo darwin-rebuild switch --flake .
 
       if [ $? -eq 0 ]; then
         echo "Switch succeeded"

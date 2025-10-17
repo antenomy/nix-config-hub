@@ -35,8 +35,6 @@
       # Let home-manager install and manage itself.
       programs.home-manager.enable = true;
 
-      home.homeDirectory = /home/antenomy;
-
       home.packages = with pkgs; [];
 
       home.sessionVariables = {
@@ -66,6 +64,7 @@
       modules = [ 
         ./machines/aelin/default.nix 
         home-manager.darwinModules.home-manager  {
+          home-manager.homeDirectory = "/Users/antenomy";
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.verbose = true;
