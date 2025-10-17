@@ -5,9 +5,9 @@ switch VAR="update":
   recognizeHostname=0
   isDarwin=0
 
-  git add .
-  git commit -m "{{VAR}}"
-  git push
+  # git add .
+  # git commit -m "{{VAR}}"
+  # git push
 
   if [ "$HOSTNAME" = "aelin" ]; then
     path="/etc/nix-darwin"
