@@ -74,11 +74,21 @@
     };
   in
   {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+    # Dorian
+    nixosConfigurations.dorian = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [
         # ./modules/default.nix
         ./machines/dorian/default.nix
+      ];
+    };
+
+    # Lorcan
+    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+      specialArgs = { inherit inputs; };
+      modules = [
+        # ./modules/default.nix
+        ./machines/lorcan/nixos/configuration.nix
       ];
     };
 
