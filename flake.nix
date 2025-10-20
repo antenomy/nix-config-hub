@@ -14,8 +14,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Hyperland / Wayland related flakes
-    secrets.url = "path:./secrets/secrets.nix" 
+  #  secrets.url = "path:./secrets/secrets.nix"; 
   };
 
   outputs = { self, nixpkgs, nix-darwin, home-manager, ... } @ inputs:
