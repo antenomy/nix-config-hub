@@ -15,19 +15,12 @@
     };
 
     # Hyperland / Wayland related flakes
-    hyprland = {
-      url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hyprlock = {
-      url = "github:hyprwm/hyprlock";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = { self, nixpkgs, nix-darwin, home-manager, ... } @ inputs:
   let
+    lib = nixpkgs.lib;
+
     homeconfig = {pkgs, ...}: {
       # this is internal compatibility configuration 
       # for home-manager, don't change this!
@@ -41,6 +34,22 @@
         EDITOR = "vim";
       };
 
+      # programs.vscode {
+      #   # ...
+
+      #   userSettings = {
+      #     # ...
+      #     "workbench.colorTheme" = "Dracula Theme";
+      #   };
+
+      #   # ...
+
+      #   extensions = with pkgs.vscode-marketplace; [
+      #     jnoortheen.nix-ide
+      #     theme-dracula
+      #   ];
+      # }
+
       programs.zsh = {
         enable = true;
         shellAliases = {
@@ -49,11 +58,17 @@
         };
 
         sessionVariables = {
-          PATH="/Users/antenomy/Library/Python/3.9/bin:$PATH";
+          PATH = lib.concatStringsSep ":" [
+            "/Users/antenomy/Library/Python/3.9/bin"
+            "/run/current-system/sw/bin"
+            "$PATH"
+          ];
         };
 
         localVariables = {
-          PS1="$USER@$(hostname) > ";
+          PS1 = "%~ > ";
+
+          # PS1="$USER@$(hostname) $PATH > ";
         };
       };
     };
