@@ -2,7 +2,6 @@
 let
   aelinSSHKey = builtins.getEnv "AELIN_SSH_KEY";
   dorianSSHKey = builtins.getEnv "DORIAN_SSH_KEY";
-  cloudflaredToken = builtins.getEnv "CLOUDFLARED_TOKEN";
 in
 {
   imports =
@@ -36,6 +35,11 @@ in
     enable = true;
   };  
 
+  networking = {
+    hostName = "lorcan";
+    computerName = "lorcan";
+  };
+
   # systemd.user.services.run-on-startup = {
   #   description = "User startup script";
   #   after = [ "graphical-session.target" ];
@@ -54,7 +58,7 @@ in
     serviceConfig = {
       Type = "simple";
       User = "antenomy";
-      ExecStart = "cloudflared tunnel run --token ${CLOUDFLARED_TOKEN}";
+      ExecStart = "cloudflared tunnel run lorcan-ssh";
       RemainAfterExit = true;
     };
   };

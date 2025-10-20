@@ -74,24 +74,7 @@
     };
   in
   {
-    # Dorian
-    nixosConfigurations.dorian = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs; };
-      modules = [
-        # ./modules/default.nix
-        ./machines/dorian/default.nix
-      ];
-    };
-
-    # Lorcan
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs; };
-      modules = [
-        # ./modules/default.nix
-        ./machines/lorcan/configuration.nix
-      ];
-    };
-
+    # Aelin
     darwinConfigurations.aelin = nix-darwin.lib.darwinSystem {
       specialArgs = { inherit self nixpkgs inputs; };
       modules = [ 
@@ -103,6 +86,24 @@
           home-manager.verbose = true;
           home-manager.users.antenomy = homeconfig;
         }
+      ];
+    };
+
+    # Dorian
+    nixosConfigurations.dorian = nixpkgs.lib.nixosSystem {
+      specialArgs = { inherit inputs; };
+      modules = [
+        # ./modules/default.nix
+        ./machines/dorian/default.nix
+      ];
+    };
+
+    # Lorcan
+    nixosConfigurations.lorcan = nixpkgs.lib.nixosSystem {
+      specialArgs = { inherit inputs; };
+      modules = [
+        # ./modules/default.nix
+        ./machines/lorcan/configuration.nix
       ];
     };
   };
