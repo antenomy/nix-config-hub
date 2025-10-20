@@ -1,9 +1,9 @@
 { config, lib, pkgs, inputs, ... }:
-#let 
-  # path = import config/paths.nix;
- # token = import ./secrets.nix;
-  # homelab-setup = import path.HOMELAB_SETUP { inherit pkgs; };
-#in
+let
+  aelinSSHKey = builtins.getEnv "AELIN_SSH_KEY";
+  dorianSSHKey = builtins.getEnv "DORIAN_SSH_KEY";
+  cloudflaredToken = builtins.getEnv "CLOUDFLARED_TOKEN";
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -21,8 +21,8 @@
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "docker" ];  # wheel = sudo access
     openssh.authorizedKeys.keys = [
-      config.PC_SSH_KEY
-      config.MACBOOK_SSH_KEY
+      dorianSSHKey
+      aelinSSHKey
     ];
   };
 
@@ -54,7 +54,7 @@
     serviceConfig = {
       Type = "simple";
       User = "antenomy";
-      ExecStart = "cloudflared tunnel run --token ${config.A22_CLOUDFLARED_TO_WARP_TUNNEL}";
+      ExecStart = "cloudflared tunnel run --token ${CLOUDFLARED_TOKEN}";
       RemainAfterExit = true;
     };
   };
