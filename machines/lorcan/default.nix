@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 let 
   # path = import config/paths.nix;
   token = import ../../secrets/secrets.nix;
@@ -7,7 +7,7 @@ in
 {
   imports =
     [ # Include the results of the hardware scan.
-      "./hardware-configuration.nix"
+      ./hardware-configuration.nix
       # path.HOMEPAGE_DASHBOARD_CONFIG
     ];
 
