@@ -1,14 +1,14 @@
 { config, lib, pkgs, ... }:
 let 
-  path = import config/paths.nix;
-  token = import ../../secrets.nix;
-  homelab-setup = import path.HOMELAB_SETUP { inherit pkgs; };
+  # path = import config/paths.nix;
+  token = import ../../secrets/secrets.nix;
+  # homelab-setup = import path.HOMELAB_SETUP { inherit pkgs; };
 in
 {
   imports =
     [ # Include the results of the hardware scan.
-      "/machines/lorcan/nixos/hardware-configuration.nix"
-      path.HOMEPAGE_DASHBOARD_CONFIG
+      "./hardware-configuration.nix"
+      # path.HOMEPAGE_DASHBOARD_CONFIG
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -36,16 +36,16 @@ in
     enable = true;
   };  
 
-  systemd.user.services.run-on-startup = {
-    description = "User startup script";
-    after = [ "graphical-session.target" ];
-    wantedBy = [ "default.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${homelab-setup}/bin/homelab-setup";
-      RemainAfterExit = true;
-    };
-  };
+  # systemd.user.services.run-on-startup = {
+  #   description = "User startup script";
+  #   after = [ "graphical-session.target" ];
+  #   wantedBy = [ "default.target" ];
+  #   serviceConfig = {
+  #     Type = "oneshot";
+  #     ExecStart = "${homelab-setup}/bin/homelab-setup";
+  #     RemainAfterExit = true;
+  #   };
+  # };
 
   systemd.user.services.cloudflared-startup = {
     description = "User startup script";
