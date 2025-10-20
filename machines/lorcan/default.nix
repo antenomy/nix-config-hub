@@ -1,9 +1,9 @@
 { config, lib, pkgs, inputs, ... }:
-let 
+# let 
   # path = import config/paths.nix;
-  token = import ../../secrets/secrets.nix;
+  # token = import ../../secrets/secrets.nix;
   # homelab-setup = import path.HOMELAB_SETUP { inherit pkgs; };
-in
+# in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -21,8 +21,8 @@ in
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "docker" ];  # wheel = sudo access
     openssh.authorizedKeys.keys = [
-      token.PC_SSH_KEY
-      token.MACBOOK_SSH_KEY
+      inputs.secrets.PC_SSH_KEY
+      inputs.secrets.MACBOOK_SSH_KEY
     ];
   };
 
@@ -54,7 +54,7 @@ in
     serviceConfig = {
       Type = "simple";
       User = "antenomy";
-      ExecStart = "cloudflared tunnel run --token ${token.A22_CLOUDFLARED_TO_WARP_TUNNEL}";
+      ExecStart = "cloudflared tunnel run --token ${inputs.secrets.A22_CLOUDFLARED_TO_WARP_TUNNEL}";
       RemainAfterExit = true;
     };
   };
