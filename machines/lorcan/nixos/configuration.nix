@@ -7,7 +7,7 @@ in
 {
   imports =
     [ # Include the results of the hardware scan.
-      "/etc/nixos/hardware-configuration.nix"
+      "/machines/lorcan/nixos/hardware-configuration.nix"
       path.HOMEPAGE_DASHBOARD_CONFIG
     ];
 
