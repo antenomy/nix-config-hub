@@ -20,7 +20,6 @@
 
   security.pam.services.sudo_local.touchIdAuth = true;
 
-
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
@@ -128,55 +127,6 @@
     powerline-fonts
     powerline-symbols
   ];
-
-  # launchd = {
-  #   user = {
-  #     agents = {
-  #       startup-daemon = {
-  #         command = "bash ~/git/nix-config-hub/scripts/darwin/startup-script.sh";
-  #         serviceConfig = {
-  #           KeepAlive = false;
-  #           RunAtLoad = true;
-  #           StandardOutPath = "/tmp/yabai-daemon.out.log";
-  #           StandardErrorPath = "/tmp/yabai-daemon.err.log";
-  #         };
-  #       };
-  #     };
-  #     # agents = {
-  #     #   sketchybar-daemon = {
-  #     #     command = "sketchybar";
-  #     #     serviceConfig = {
-  #     #       KeepAlive = true;
-  #     #       RunAtLoad = true;
-  #     #       StandardOutPath = "/tmp/sketchybar-daemon.out.log";
-  #     #       StandardErrorPath = "/tmp/sketchybar-daemon.err.log";
-  #     #     };
-  #     #   };
-  #     # };
-  #   };
-  # };
-
-  # programs.launchd = {
-  #   # Enable launchd support
-  #   enable = true;
-
-  #   # Define your startup jobs
-  #   jobs = {
-  #     myApp = {
-  #       program = "/bin/sh"; # path to executable
-  #       arguments = ["-c" "yabai"];
-  #       runAtLoad = true;   # start on login
-  #       keepAlive = true;  # restart if crashes (optional)
-  #     };
-
-  #     # anotherService = {
-  #     #   program = "/usr/local/bin/my-script.sh";
-  #     #   runAtLoad = true;
-  #     #   keepAlive = true;
-  #     # };
-  #   };
-  # };
-
   
   # Necessary for using flakes on this system.
   nix.settings.experimental-features = "nix-command flakes";

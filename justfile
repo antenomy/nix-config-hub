@@ -1,7 +1,26 @@
-# justfile
-
 # Default variable
 VAR := "update"
+
+dot:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    HOSTNAME="$(hostname)"
+    recognizeHostname=0
+    isDarwin=0
+
+    if [ "$HOSTNAME" = "aelin" ]; then
+        mkdir -p ~/.config
+
+        # Aerospace
+        cp ./dotfiles/darwin/.aerospace.toml ~
+        aerospace reload-config
+
+        cp -r ./dotfiles/darwin/sketchybar ~/.config/
+        echo "Copied macOS configs"
+    else 
+        echo "unrecognized hostname: $HOSTNAME"
+    fi
 
 switch:
     #!/usr/bin/env bash
@@ -47,28 +66,10 @@ switch:
         fi
     fi
 
+    # Update dotfiles
+    just dot
+
 push VAR="update":
     git add .
     git commit -m "{{VAR}}"
     git push
-
-dot:
-    #!/usr/bin/env bash
-    set -euo pipefail
-
-    HOSTNAME="$(hostname)"
-    recognizeHostname=0
-    isDarwin=0
-
-    if [ "$HOSTNAME" = "aelin" ]; then
-        mkdir -p ~/.config
-
-        # Aerospace
-        cp ./dotfiles/darwin/.aerospace.toml ~
-        aerospace reload-config
-
-        cp -r ./dotfiles/darwin/sketchybar ~/.config/
-        echo "Copied macOS configs"
-    else 
-        echo "unrecognized hostname: $HOSTNAME"
-    fi
