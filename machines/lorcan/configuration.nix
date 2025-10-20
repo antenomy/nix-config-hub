@@ -28,7 +28,9 @@ in
   environment.systemPackages = with pkgs; [
     vim
     cloudflared
+    ethtool
     docker-compose
+    just
   ];
 
   programs.git = {
@@ -70,8 +72,13 @@ in
 #      PermitRootLogin = "no";
       PasswordAuthentication = true;  # Allow password login
     };
+      extraConfig = ''
+PubkeyAuthentication yes
+'';
   };
 
+  #TrustedUserCAKeys /etc/ssh/ca.pub
+  
   virtualisation.docker.enable = true;
 
   # Open ports in the firewall.

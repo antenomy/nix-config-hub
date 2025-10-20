@@ -21,6 +21,8 @@ dot:
     else 
         echo "unrecognized hostname: $HOSTNAME"
     fi
+switch-simple:
+    sudo nixos-rebuild switch --flake .
 
 switch:
     #!/usr/bin/env bash
