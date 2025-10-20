@@ -37,7 +37,6 @@ in
 
   networking = {
     hostName = "lorcan";
-    computerName = "lorcan";
   };
 
   # systemd.user.services.run-on-startup = {
