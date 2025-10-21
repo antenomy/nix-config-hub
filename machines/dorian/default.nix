@@ -36,7 +36,7 @@
     #"video=DP-1:2560x1440@144"
     #"video=DP-2:2560x1440@144"
   #];
-  # https://wiki.nixos.org/wiki/AMD_GPU
+  # https://wiki.nxos.org/wiki/AMD_GPU
   
   # systemd.tmpfiles.rules = 
   # let
@@ -81,7 +81,6 @@
   # Network
   networking = {
     hostName = "dorian";
-    computerName = "dorian";
   };
   
   networking.wireless.enable = true;
@@ -183,6 +182,7 @@
     neofetch
     nwg-look
     veracrypt
+    ethtool
 
     # Desktop Environment	
     hyprland
@@ -269,21 +269,6 @@
   virtualisation.docker.rootless.enable = true;
 
   networking.interfaces.eth0.wakeOnLan.enable = true;
-
-
-  # Misc
-  
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  #programs.mtr.enable = true;
-  #programs.gnupg.agent = {
-  #  enable = true;
-  #  enableSSHSupport = true;
-  #};
-
-  # Enable the OpenSSH daemon.
-  #services.openssh.enable = true;
-
 
   # Customization
   #gtk = {

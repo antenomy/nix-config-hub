@@ -26,9 +26,12 @@ in
   };
 
   environment.systemPackages = with pkgs; [
+    # General
     vim
+
+    # Developer
     cloudflared
-    ethtool
+    wakeonlan
     docker-compose
     just
   ];
