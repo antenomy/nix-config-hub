@@ -90,7 +90,7 @@
     };
 
     # Dorian
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.dorian = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [
         # ./modules/default.nix
