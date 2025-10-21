@@ -103,7 +103,7 @@
       specialArgs = { inherit inputs; };
       modules = [
         # ./modules/default.nix
-        ./machines/lorcan/configuration.nix
+        ./machines/lorcan/default.nix
       ];
     };
   };

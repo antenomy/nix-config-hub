@@ -5,17 +5,14 @@ let
 in
 {
   imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+    [
+      ./hardware.nix
       # path.HOMEPAGE_DASHBOARD_CONFIG
     ];
 
-  # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # networking.hostName = "nixos"; # Define your hostname.
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.antenomy = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "docker" ];  # wheel = sudo access
@@ -55,6 +52,8 @@ in
   #   };
   # };
 
+
+  # FIX DOESNT WORK
   systemd.user.services.cloudflared-startup = {
     description = "User startup script";
     after = [ "graphical-session.target" ];
@@ -72,7 +71,6 @@ in
     enable = true;
     ports = [1918];
     settings = {
-#      PermitRootLogin = "no";
       PasswordAuthentication = true;  # Allow password login
     };
       extraConfig = ''

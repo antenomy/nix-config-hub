@@ -1,8 +1,11 @@
 { config, pkgs, lib, inputs, ... }:
-
+let 
+  wifiPassword = builtins.getEnv "WIFI_PASSWORD";
+  aelinSSHKey = builtins.getEnv "AELIN_SSH_KEY";
+in
 {
   imports = [ 
-    ./hardware-configuration.nix
+    ./hardware.nix
     inputs.home-manager.nixosModules.home-manager
     # inputs.hyprland.nixosModules.hyprland
   ];
@@ -13,13 +16,15 @@
     isNormalUser = true;
     description = "antenomy";
     extraGroups = [ "networkmanager" "wheel" "docker"];
+    openssh.authorizedKeys.keys = [
+      aelinSSHKey
+    ];
   };
 
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
  
-    
   # Home Manager
   home-manager.users.antenomy = import ./home.nix {
     pkgs = pkgs;
@@ -31,36 +36,14 @@
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true ;
-  
-    #boot.kernelParams = [
-    #"video=DP-1:2560x1440@144"
-    #"video=DP-2:2560x1440@144"
-  #];
-  # https://wiki.nxos.org/wiki/AMD_GPU
-  
-  # systemd.tmpfiles.rules = 
-  # let
-  #   rocmEnv = pkgs.symlinkJoin {
-  #     name = "rocm-combined";
-  #     paths = with pkgs.rocmPackages; [
-  #       rocblas
-  #       hipblas
-  #       clr
-  #     ];
-  #   };
-  # in [
-  #   "L+    /opt/rocm   -    -    -     -    ${rocmEnv}"
-  # ];
 
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
-    extraPackages = with pkgs; [
-      # rocmPackages.clr.icd
-    ];
   };
 
-  # Cloudflared Systemd
+
+  # Systemd
   systemd.services.cloudflared = {
     description = "Cloudflare Tunnel";
     wants = [ "network-online.target" ];
@@ -81,25 +64,25 @@
   # Network
   networking = {
     hostName = "dorian";
-  };
-  
-  networking.wireless.enable = true;
-  
-  networking.wireless.networks = {
-    "Cloudy Bay downstairs" = {
-      psk = "Get Funky";
+    wireless = {
+      enable = true;
+      networks = {
+        "Cloudy Bay downstairs" = {
+          psk = "Get Funky";
+        };
+      };
     };
+    interfaces.eth0.wakeOnLan.enable = true;
   };
 
-  # Configure network proxy if necessary
-  #networking.proxy.default = "http://user:password@proxy:port/";
-  #networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-  
-  #networking.networkmanager.enable = true;
 
+  # SSH
   services.openssh = {  
-   enable = true;  
-   ports = [1918];
+    enable = true;  
+    ports = [1918];
+    settings = {
+      PasswordAuthentication = true;
+    };
   };
   
  
@@ -107,7 +90,7 @@
   # Settings
   time.timeZone = "Europe/Stockholm";
   i18n.defaultLocale = "en_US.UTF-8";
-  console.keyMap = "uk";
+  console.keyMap = "us";
   services.printing.enable = true;
 
   i18n.extraLocaleSettings = {
@@ -121,6 +104,7 @@
     LC_TELEPHONE = "sv_SE.UTF-8";
     LC_TIME = "sv_SE.UTF-8";
   };
+
 
   # Desktop Environment
   services.greetd = {
@@ -168,12 +152,10 @@
     stdenv.cc.cc
   ];
   
-  # Packages
+
   environment.systemPackages = with pkgs; [
-    
     # General
     vim 
-    #foot
     kitty    
     brave
     rofi
@@ -221,16 +203,7 @@
     discord
 
     # Leisure
-   # #spotify
-   # (symlinkJoin {
-   #   name = "spotify-fixed";
-   #   paths = [ spotify ];
-   #   buildInputs = [ makeWrapper ];
-   #   postBuild = ''
-   #     wrapProgram $out/bin/spotify \
-   #       --prefix LD_LIBRARY_PATH : ${libpulseaudio}/lib
-   #   '';
-   # })
+    #spotify
    
     # Creative
     gimp3-with-plugins
@@ -255,20 +228,16 @@
     #userEmail = "lucas.grant@gmail.com";
   };
   
-  programs.direnv = {
-    enable = true;
-  };  
+  programs.direnv.enable = true;
 
   services.hardware.openrgb.enable = true;
  
-  # Docker
+  virtualisation.docker = {
+    enable = true;
 
-  virtualisation.docker.enable = true;
-
-  # Optional: If you're using flakes or systemd-boot, you may also want:
-  virtualisation.docker.rootless.enable = true;
-
-  networking.interfaces.eth0.wakeOnLan.enable = true;
+    # Optional: If you're using flakes or systemd-boot, you may also want:
+    rootless.enable = true;
+  };
 
   # Customization
   #gtk = {
@@ -302,5 +271,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
-
 }
