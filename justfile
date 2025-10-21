@@ -17,6 +17,7 @@ dot:
 
         # Aerospace
         cp ./dotfiles/darwin/.aerospace.toml ~
+        cp -r dotfiles/darwin/aerospace ~/.config
         aerospace reload-config
 
         cp -r ./dotfiles/darwin/sketchybar ~/.config/
