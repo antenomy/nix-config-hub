@@ -1,11 +1,14 @@
 # Default variable
 VAR := "update"
 
+edit:
+    HOSTNAME="$(hostname)"
+    vim machines/$HOSTNAME/default.nix
+
 dot:
     #!/usr/bin/env bash
     set -euo pipefail
 
-    HOSTNAME="$(hostname)"
     recognizeHostname=0
     isDarwin=0
 
@@ -33,11 +36,9 @@ switch:
     isDarwin=0
 
     if [ "$HOSTNAME" = "aelin" ]; then
-        path="/etc/nix-darwin"
         recognizeHostname=1
         isDarwin=1
-    elif [ "$HOSTNAME" = "nixos" ]; then  # change to dorian if needed
-        path="/etc/nixos"
+    elif [ "$HOSTNAME" = "dorian" ]; then  # change to dorian if needed
         recognizeHostname=1
     else
         echo "unrecognized hostname: $HOSTNAME"
@@ -62,9 +63,9 @@ switch:
             else
                 echo "Switch failed"
             fi
-        else
+        elif  [ "$HOSTNAME" = "dorian" ]; then 
             echo "Running nixos-rebuild switch..."
-            sudo nixos-rebuild switch --flake ./flake.nix
+            sudo nixos-rebuild switch --flake .
         fi
     fi
 

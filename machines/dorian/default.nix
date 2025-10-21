@@ -59,6 +59,75 @@ in
 
     wantedBy = [ "multi-user.target" ];
   };
+  
+
+  # Ollama
+  services.ollama = {
+    enable = true;
+    acceleration = "rocm";
+   
+    # Optional: preload models, see https://ollama.com/library
+    loadModels = [
+      "deepseek-r1:1.5b"
+      "deepseek-r1:8b"
+      "deepseek-r1:32b"
+      "deepseek-r1:70b"
+      
+      "qwen3:32b"
+      "devstral:24b" 
+
+      "mistral-small:24b"
+      "dolphin-mixtral:latest" 
+    ];
+    #rocmOverrideGfx = 11.0.0;
+  };
+
+
+  # SSH
+  services.openssh = {  
+    enable = true;  
+    ports = [1918];
+    settings = {
+      PasswordAuthentication = true;
+    };
+  };
+
+
+  # Desktop Environment
+  services.greetd = {
+    enable = true;
+    settings = rec {
+      initial_session = {
+        command = "hyprland > /dev/null 2>&1";
+        user = "antenomy";
+      };
+      default_session = initial_session;
+    };
+  };
+
+  services.xserver.xkb = {
+    layout = "uk";
+    variant = "nodeadkeys";
+  };
+
+
+  services.hardware.openrgb.enable = true;
+
+
+  # Audio
+  services.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
+
+    # use the example session manager (no others are packaged yet so this is enabled by default,
+    # no need to redefine it in your config for now)
+    #media-session.enable = true;
+  };
 
 
   # Network
@@ -75,18 +144,7 @@ in
     interfaces.eth0.wakeOnLan.enable = true;
   };
 
-
-  # SSH
-  services.openssh = {  
-    enable = true;  
-    ports = [1918];
-    settings = {
-      PasswordAuthentication = true;
-    };
-  };
   
- 
-
   # Settings
   time.timeZone = "Europe/Stockholm";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -105,52 +163,16 @@ in
     LC_TIME = "sv_SE.UTF-8";
   };
 
-
-  # Desktop Environment
-  services.greetd = {
-    enable = true;
-    settings = rec {
-      initial_session = {
-        command = "hyprland > /dev/null 2>&1";
-        user = "antenomy";
-      };
-      default_session = initial_session;
-    };
-  };
-
-  # programs.hyprland.enable = true; 
-
-  services.xserver.xkb = {
-    layout = "uk";
-    variant = "nodeadkeys";
-  };
-
-
-  # Audio
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
-
-  programs.nix-ld.enable = true;
-
-  programs.nix-ld.libraries = with pkgs; [
-    glibc
-    zlib
-    openssl
-    curl
-    libgcc
-    stdenv.cc.cc
-  ];
+#  programs.nix-ld.enable = true;
+#
+#  programs.nix-ld.libraries = with pkgs; [
+#    glibc
+#    zlib
+#    openssl
+#    curl
+#    libgcc
+#    stdenv.cc.cc
+#  ];
   
 
   environment.systemPackages = with pkgs; [
@@ -165,6 +187,8 @@ in
     nwg-look
     veracrypt
     ethtool
+    htop
+    amdgpu_top
 
     # Desktop Environment	
     hyprland
@@ -201,7 +225,7 @@ in
 
     # Social
     discord
-
+    
     # Leisure
     #spotify
    
@@ -229,8 +253,6 @@ in
   };
   
   programs.direnv.enable = true;
-
-  services.hardware.openrgb.enable = true;
  
   virtualisation.docker = {
     enable = true;
