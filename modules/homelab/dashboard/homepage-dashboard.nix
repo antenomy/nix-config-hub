@@ -20,7 +20,7 @@ in
 
     # Minimal config to test
     settings = {
-      title = "a22 Dashboard";
+      title = "lorcan Dashboard";
       background = "https://images.unsplash.com/photo-1502790671504-542ad42d5189";
       cardBlur = "md";
       theme = "dark";

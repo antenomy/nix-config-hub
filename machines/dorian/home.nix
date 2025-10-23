@@ -96,9 +96,9 @@
         smart_resizing = false;
       };
 
-      gestures = {
-        workspace_swipe = false;
-      };
+      # gestures = {
+      #   workspace_swipe = false;
+      # };
 
       misc = {
         force_default_wallpaper = -1;

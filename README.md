@@ -1,13 +1,13 @@
 # nix-config-hub
-A hub for the configuration files of all my NixOS devices, such as my PC, home servers etc.
+A hub for the configuration files of all my nixOS devices, such as my PC, laptops, home servers etc.
 
 ### Structure
 The machines currently supported by this flake are:
 - `aelin` nix-darwin managed main macOS laptop running on Apple Silicon used as daily driver
 - `dorian` nixOS running on main stationary computer with AMD graphics and processor
 - `manon` nix WSL client for main stationary computer Windows dual boot
-- `lorcan` nixOS home server used for tunneling with Cloudflared, running automation scripts, wake on LAN, etc. 
-- `elide` nixOS home server used for running homelab services like pihole, portainer, hosting, etc.
+- `lorcan` nixOS home server used for tunneling, automations, networking, etc. 
+- `elide` nixOS home server used for running homelab services like pihole, portainer, docker, etc.
 - `lysandra` external macOS laptop not mainly managed by any nix software, running on Apple Silicon 
 
 
