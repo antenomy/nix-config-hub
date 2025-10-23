@@ -78,7 +78,7 @@ in
       "devstral:24b" 
       "mistral-small:24b"
     ];
-    rocmOverrideGfx = 11.0.0;
+    rocmOverrideGfx = "11.0.0";
   };
 
 

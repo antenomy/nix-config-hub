@@ -8,7 +8,7 @@ edit:
 
 update-dotfiles:
     #!/usr/bin/env bash
-    bash "~/nix/scripts/just/update-dotfiles.sh"
+    bash "$HOME/nix/scripts/just/update-dotfiles.sh"
 
 switch-simple:
     #!/usr/bin/env bash
@@ -19,7 +19,7 @@ switch-simple:
 
 switch:
     #!/usr/bin/env bash
-    bash "~/nix/scripts/just/switch.sh"
+    bash "$HOME/nix/scripts/just/switch.sh"
 
 push VAR="update":
     #!/usr/bin/env bash
