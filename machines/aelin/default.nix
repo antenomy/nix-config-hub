@@ -24,27 +24,26 @@
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
 
-    # General
-    iterm2
+    # Basic
     vim
     neofetch
+    cloudflared
+    just
+    detect-secrets
+    wakeonlan
 
     # Privacy
     bitwarden-desktop
 
     # Productivity
-    # notion-app-enhanced
-    # raycast
+    aerospace
     chatgpt
-    # yabai
 
     # Customization
-    # jankyborders
     sketchybar
-    aerospace
-    # _0xproto
 
     # Developer
+    iterm2
     vscode
     code-cursor
     neovim
@@ -52,30 +51,32 @@
     docker
     docker-compose
     direnv
-    cloudflared
-    just
-    ollama
     ffmpeg_8
 
     python311
     python310
 
+    ollama
+    
     # Communication
     zoom-us
-    # whatsapp-for-mac
     discord
 
     # Media
     spotify
-    
+
+    # Not currently using
+    # whatsapp-for-mac
+    # jankyborders
+    # notion-enhanced-app
+    # betterdisplay
   ];
-
-
-  # betterdisplay
 
   homebrew = {
     enable = true;
     # onActivation.cleanup = "uninstall";
+
+    # ADD MACSTORE APPS
 
     taps = [];
     brews = [

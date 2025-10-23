@@ -1,4 +1,4 @@
 # Guides
 
 Current guides:
-- [Example](./example.md)
+- [Global wake on LAN for dorian from aelin](./wol-dorian-aelin.md)

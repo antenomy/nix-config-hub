@@ -1,5 +1,8 @@
-{ pkgs, lib, ... }:
-
+{ 
+  pkgs, 
+  lib, 
+  ... 
+}:
 {
   home.packages = [
     pkgs.atool
@@ -9,12 +12,11 @@
   programs.bash.enable = true;
   programs.bash.bashrcExtra = ''
     # Aliases
-    alias nrs='sudo nixos-rebuild switch'
-    alias hyprcon='sudo vim ~/.config/hypr/hyprland.conf'
-    alias nce='sudo vim /etc/nixos/configuration.nix'
+    #alias switch='sudo nixos-rebuild switch'
+    alias hyprland-edit='sudo vim ~/.config/hypr/hyprland.conf'
+    alias nix-edit='vim ~/nix/machines'
     alias nhc='sudo vim /etc/nixos/home.nix'
   '';
-
 
   wayland.windowManager.hyprland = {
     enable = true;

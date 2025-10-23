@@ -1,7 +1,6 @@
 # nix-config-hub
 A hub for the configuration files of all my NixOS devices, such as my PC, home servers etc.
 
-
 ### Structure
 The machines currently supported by this flake are:
 - `aelin` nix-darwin managed main macOS laptop used as daily driver
@@ -13,10 +12,21 @@ The machines currently supported by this flake are:
 
 
 ### Basic Setup
-For a more expanisve guide check [Guides](./docs/GUIDES.md). To run, make sure to have the package [Just](https://github.com/casey/just) installed, and then navigate to the project dir and run:
+For more detailed guides pertaining to the repo check [Guides](./docs/GUIDES.md). 
 
+##### 1. Download
+```
+git clone git@github.com:antenomy/nix-config-hub.git ~/nix
+``` 
+
+##### 2. Build
+Navigate to the project dir `~/nix`, then, if you have the package [just](https://github.com/casey/just) already installed, simply run:
 ```
 just switch
+```
+Otherwise just will be installed in the build process but you will
+```
+sudo nixos-rebuild switch --flake .#setup
 ```
 
 To only update dot files run:

@@ -43,7 +43,7 @@ in
   };
 
 
-  # Systemd
+  # Services
   systemd.services.cloudflared = {
     description = "Cloudflare Tunnel";
     wants = [ "network-online.target" ];
@@ -65,21 +65,20 @@ in
   services.ollama = {
     enable = true;
     acceleration = "rocm";
-   
-    # Optional: preload models, see https://ollama.com/library
     loadModels = [
+      # Deepseek
       "deepseek-r1:1.5b"
       "deepseek-r1:8b"
       "deepseek-r1:32b"
-      "deepseek-r1:70b"
       
+      # Qwen
       "qwen3:32b"
-      "devstral:24b" 
 
+      # Mistral
+      "devstral:24b" 
       "mistral-small:24b"
-      "dolphin-mixtral:latest" 
     ];
-    #rocmOverrideGfx = 11.0.0;
+    rocmOverrideGfx = 11.0.0;
   };
 
 
@@ -110,7 +109,7 @@ in
     variant = "nodeadkeys";
   };
 
-
+  # Misc
   services.hardware.openrgb.enable = true;
 
 
@@ -162,19 +161,8 @@ in
     LC_TELEPHONE = "sv_SE.UTF-8";
     LC_TIME = "sv_SE.UTF-8";
   };
-
-#  programs.nix-ld.enable = true;
-#
-#  programs.nix-ld.libraries = with pkgs; [
-#    glibc
-#    zlib
-#    openssl
-#    curl
-#    libgcc
-#    stdenv.cc.cc
-#  ];
   
-
+  # Programs & Packages
   environment.systemPackages = with pkgs; [
     # General
     vim 
@@ -217,6 +205,7 @@ in
     rocmPackages.clr
     clinfo
     just
+    detect-secrets
 
     # Productivity
     notion-app-enhanced
@@ -237,7 +226,6 @@ in
     font-awesome
     powerline-fonts
     powerline-symbols
-    #(nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly"];})
   ];
 
   programs.steam = {
@@ -261,36 +249,6 @@ in
     rootless.enable = true;
   };
 
-  # Customization
-  #gtk = {
-  #  enable = true;
-  #  theme = {
-  #    name = "Adwaita";
-  #    package = pkgs.adwaita-gtk3;  # Dark variant included
-  #  };
-  #  iconTheme = {
-  #    name = "Papirus-Dark";
-  #    package = pkgs.papirus-icon-theme;
-  #  };
-  #  gtk3.extraConfig = {
-  #    Settings = ''
-  #      gtk-application-prefer-dark-theme=1
-  #    '';
-  #  };
-  #  gtk4.extraConfig = {
-  #    Settings = ''
-  #      gtk-application-prefer-dark-theme=1
-  #    '';
-  #  };
-  #};
-
-
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.05"; # Did you read the comment?
+  # Don't Edit
+  system.stateVersion = "25.05";
 }

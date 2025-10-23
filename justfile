@@ -1,55 +1,47 @@
-# Default variable
-VAR := "update"
+# Variables
+HOSTNAME:="$(hostname)"
+SYSTEM:="$(uname)"
 
 edit:
-    HOSTNAME="$(hostname)"
+    #!/usr/bin/env bash
     vim machines/$HOSTNAME/default.nix
 
-dot:
-    #!/usr/bin/env bash
-    set -euo pipefail
+dotfiles:
+    /bin/bash -c "~/nix/"
 
-    recognizeHostname=0
-    isDarwin=0
-
-    if [ "$HOSTNAME" = "aelin" ]; then
-        mkdir -p ~/.config
-
-        # Aerospace
-        cp ./dotfiles/darwin/.aerospace.toml ~
-        cp -r dotfiles/darwin/aerospace ~/.config
-        aerospace reload-config
-
-        cp -r ./dotfiles/darwin/sketchybar ~/.config/
-        echo "Copied macOS configs"
-    else 
-        echo "unrecognized hostname: $HOSTNAME"
-    fi
 switch-simple:
-    sudo nixos-rebuild switch --flake .
+    #!/usr/bin/env bash
+    if [ "$SYSTEM" == "Darwin" ]; then
+        sudo nixos-rebuild switch --flake .
+    else
+        sudo darwin-rebuild switch --flake .
+
 
 switch:
     #!/usr/bin/env bash
     set -euo pipefail
 
-    HOSTNAME="$(hostname)"
-    recognizeHostname=0
-    isDarwin=0
+    RECOGNIZED_HOSTNAMES=("aelin" "dorian" "manon" "lorcan" "elide" "lysandra")
+
+    if [[ " ${RECOGNIZED_HOSTNAMES[@]} " =~ " $HOSTNAME " ]]; then
+        echo "Found"
+    else
+        echo "Not found"
+    fi
 
     if [ "$HOSTNAME" = "aelin" ]; then
-        recognizeHostname=1
-        isDarwin=1
+        recognizeHostname=0
     elif [ "$HOSTNAME" = "dorian" ]; then  # change to dorian if needed
-        recognizeHostname=1
+        recognizeHostname=0
     else
         echo "unrecognized hostname: $HOSTNAME"
     fi
 
     if [ "$recognizeHostname" = 1 ]; then
         if [ "$isDarwin" = 1 ]; then
-            echo "Running darwin-rebuild switch..."
+            echo "running darwin-rebuild switch..."
             if sudo darwin-rebuild switch --flake .; then
-                echo "Switch succeeded"
+                echo "switch succeeded"
 
                 SOURCE_DIR="/Applications/Nix Apps"
                 DEST_DIR="/Applications"
@@ -65,15 +57,16 @@ switch:
                 echo "Switch failed"
             fi
         elif  [ "$HOSTNAME" = "dorian" ]; then 
-            echo "Running nixos-rebuild switch..."
+            echo "running nixos-rebuild switch..."
             sudo nixos-rebuild switch --flake .
         fi
     fi
 
     # Update dotfiles
-    just dot
+    just dotfiles
 
 push VAR="update":
+    #!/usr/bin/env bash
     git add .
     git commit -m "{{VAR}}"
     git push
