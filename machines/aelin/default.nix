@@ -25,22 +25,15 @@
   environment.systemPackages = with pkgs; [
 
     # Basic
-    vim
-    neofetch
-    cloudflared
-    just
-    detect-secrets
-    wakeonlan
 
     # Privacy
-    bitwarden-desktop
-
+    
     # Productivity
-    aerospace
     chatgpt
 
-    # Customization
+    # Desktop Environment
     sketchybar
+    aerospace
 
     # Developer
     iterm2
@@ -50,20 +43,11 @@
 
     docker
     docker-compose
-    direnv
+
     ffmpeg_8
 
     python311
     python310
-
-    ollama
-    
-    # Communication
-    zoom-us
-    discord
-
-    # Media
-    spotify
 
     # Not currently using
     # whatsapp-for-mac
@@ -71,6 +55,7 @@
     # notion-enhanced-app
     # betterdisplay
   ];
+
 
   homebrew = {
     enable = true;
@@ -128,6 +113,8 @@
     powerline-fonts
     powerline-symbols
   ];
+
+  programs.direnv.enable = true;
   
   # Necessary for using flakes on this system.
   nix.settings.experimental-features = "nix-command flakes";

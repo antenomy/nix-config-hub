@@ -78,7 +78,9 @@
     darwinConfigurations.aelin = nix-darwin.lib.darwinSystem {
       specialArgs = { inherit self nixpkgs inputs; };
       modules = [ 
+        ./modules/shared/common-packages.nix
         ./machines/aelin/default.nix 
+
         home-manager.darwinModules.home-manager  {
           # home-manager.homeDirectory = "/Users/antenomy";
           home-manager.useGlobalPkgs = true;
@@ -93,7 +95,7 @@
     nixosConfigurations.dorian = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [
-        # ./modules/default.nix
+        ./modules/shared/common-packages.nix
         ./machines/dorian/default.nix
       ];
     };

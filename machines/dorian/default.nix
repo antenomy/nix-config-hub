@@ -164,19 +164,18 @@ in
   
   # Programs & Packages
   environment.systemPackages = with pkgs; [
-    # General
-    vim 
-    kitty    
-    brave
+   # Basic
+    kitty
     rofi
     xfce.thunar
     unzip
-    neofetch
     nwg-look
-    veracrypt
     ethtool
     htop
     amdgpu_top
+
+    # Privacy
+    veracrypt
 
     # Desktop Environment	
     hyprland
@@ -197,26 +196,19 @@ in
     hyprcursor
     
     # Development
-    # vscode
     code-cursor-fhs
-    cloudflared
     wget
-    ollama
     rocmPackages.clr
     clinfo
-    just
-    detect-secrets
 
     # Productivity
-    notion-app-enhanced
+    notion
     obsidian
     dropbox
 
     # Social
-    discord
     
-    # Leisure
-    #spotify
+    # Media
    
     # Creative
     gimp3-with-plugins
@@ -224,7 +216,6 @@ in
     # Drivers
     linuxKernel.packages.linux_zen.liquidtux
     liquidctl
-
   ];
   
   fonts.packages = with pkgs; [
