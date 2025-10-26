@@ -220,11 +220,6 @@ in
    
     # Creative
     gimp3-with-plugins
-
-    # Drivers
-    linuxKernel.packages.linux_zen.liquidtux
-    liquidctl
-
   ];
   
   fonts.packages = with pkgs; [

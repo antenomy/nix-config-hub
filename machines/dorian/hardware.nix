@@ -12,8 +12,18 @@
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelModules = [ "kvm-amd" "nct6775" ];
   boot.extraModulePackages = [ ];
+  
+ # boot.kernelPatches = [
+ #   {
+ #     name = "NCT6775 driver";
+ #     patch = null; # no patch needed if zen-kernel is enabled
+ #     structuredExtraConfig = with lib.kernel; {
+ #       I2C_NCT6775 = lib.mkForce yes;
+ #     };
+ #   }
+ # ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/f77bcd1e-8763-45c0-a9bb-dc755b0ea54e";
