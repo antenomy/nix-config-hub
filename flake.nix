@@ -78,7 +78,8 @@
     darwinConfigurations.aelin = nix-darwin.lib.darwinSystem {
       specialArgs = { inherit self nixpkgs inputs; };
       modules = [ 
-        ./modules/shared/common-packages.nix
+        ./modules/shared/universal-packages.nix
+        ./modules/shared/desktop-packages.nix
         ./machines/aelin/default.nix 
 
         home-manager.darwinModules.home-manager  {
@@ -95,7 +96,8 @@
     nixosConfigurations.dorian = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [
-        ./modules/shared/common-packages.nix
+        ./modules/shared/universal-packages.nix
+        ./modules/shared/desktop-packages.nix
         ./machines/dorian/default.nix
       ];
     };
@@ -104,7 +106,7 @@
     nixosConfigurations.lorcan = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [
-        # ./modules/default.nix
+        ./modules/shared/universal-packages.nix
         ./machines/lorcan/default.nix
       ];
     };

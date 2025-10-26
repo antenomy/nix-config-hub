@@ -23,14 +23,10 @@ in
   };
 
   environment.systemPackages = with pkgs; [
-    # General
-    vim
+    # Basic
 
     # Developer
-    cloudflared
-    wakeonlan
     docker-compose
-    just
   ];
 
   programs.git = {
